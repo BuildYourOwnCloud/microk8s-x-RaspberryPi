@@ -2,11 +2,13 @@
 
 This document includes a full hardware and software breakdown of the Raspberry Pi Kubernetes clusters present at the Canonical booth during the Kubecon Valencia conference. The goal of this document is to provide enough information to allow anyone to assemble their own cluster to the same specification. 
 
-These clusters are useful for development and test purposes but could also be used in production for smaller workloads or as an edge applicance. The 
+![Multiple Microk8s Raspberry Pi Clusters](/images/1-multiclusters.jpg)
+
+These clusters are useful for development and test purposes but could also be used in production for smaller workloads or as an edge applicance.  
 
 ## Hardware Configuration
 
-As of 2022 the world-wide supply chain still has many issues and some items found in this list may be unobtainable. Therefore, we have tried to suggest adequate alternatives where possible. The logic for choosing each component is also explained. 
+As of 2022 the world-wide supply chain still has many issues and some items found in this list may be unobtainable. Therefore, we have tried to suggest adequate alternatives where possible. The logic for choosing each component is also explained. The total build price as of 2022 is around $500-650 USD. 
 
 ### Cluster Parts List
 
