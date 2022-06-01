@@ -85,7 +85,9 @@ The assembly guide for the UTRONICS case is included in this repo or can be foun
 
 The smaller black screws denoted (1) are used to assmeble the majority of the case. The slightly larger screws denoted (2) are used to mount the SSD to the removable RPI trays. The larger screws denoted (3) are used to mount the fans to the chassis and these are regular PC fan screws. The screws marked (4) are used to mount the Raspberry Pi machines to the removable machine trays. The screws marked (5) are used to mount the removable machines to the cluster case. Finally the rubber feet marked (6) are attached to the bottom of the case when it is built. 
 
-Once the case has been assembled, mount the SSD(s) and the raspberry pi(s) to each of the removable rack mounts. The switch should then be mounted in the bottom of the case. One of the main problems of the design is that the POE Hats need some clearance from the Raspberry Pi but the rack mounts do not provide this properly. It is possible to better mount this using some very long M2 screws. See this picture to see how it was mounted during the event. 
+Once the case has been assembled, mount the SSD(s) and the raspberry pi(s) to each of the removable rack mounts. The switch should then be mounted in the bottom of the case. One of the main problems of the design is that the POE Hats need some clearance from the Raspberry Pi but the rack mounts do not provide this properly. It is possible to better mount this using some very long M2 screws. See this picture to see how it was mounted during the conference. 
+
+![CompleteClusterWithoutSSDAdapters](/images/CompleteClusterWithoutSSDAdapters.jpeg)
 
 The next stage is to flash the SD Cards with Ubuntu and to boot the machines one by one using the POE. 
 
