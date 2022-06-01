@@ -2,7 +2,7 @@
 
 This document includes a full hardware and software breakdown of the Raspberry Pi Kubernetes clusters present at the Canonical booth during the Kubecon Valencia conference. The goal of this document is to provide enough information to allow anyone to assemble their own cluster to the same specification. 
 
-![Multiple Microk8s Raspberry Pi Clusters](/images/1-multiclusters.jpg)
+![Multiple Microk8s Raspberry Pi Clusters](/images/1-MultipleFinishedClusters.jpg)
 
 These clusters are useful for development and test purposes but could also be used in production for smaller workloads or as an edge applicance.  
 
@@ -68,17 +68,22 @@ Two fans are included with the UTRONICS case but they are pretty basic. One opti
 
 For those who want multi-architecture support in their cluster, the Rock Pi X is a great addition to the cluster and it includes the required pins in order to utilise the POE hat. The Rock Pi X includes an Intel CPU, a Cherry Trail Quad Core Z8350 64Bit CPU and therefore, can be used to bring x86_64 support to the cluster if required. This is quite useful if you plan to use the cluster to perform software builds. A different Ubuntu image is required to boot this machine. 
 
+![RockPiX Intel x86_64 Machine](/images/1-RockPiX.jpeg)
+
 - Rock Pi 4C (Link)
 
 The Rock Pi 4C is functionally similar to the Raspberry Pi 4 with a similar form factor and breakout pins. It also supports the POE Hat. It has a few differences, for example it can only drive a single 4K screen and is only supplied with a maximum 4GB of Memory as of this writing, but does have some benefits. The main two beneficial differences for this cluster are storage options, at the Rock Pi 4 supports both M.2 SSD and eMMC connections which are both better than the SD card slot on the RPI4. A different Ubuntu image is required to boot this machine. 
- 
  - Heatsinks, cable ties, double sided tape: 
 
 It is recommended to utilise some cable ties to clean up the network cables, fan cables and potentially the SSD cables depending on their length. It is also possible to buy OEM heatsinks which can be used on the various chipsets on the board. The cable ties can be purchased from a variety of websites such as Amazon or AliExpress. During the event we utilised double sized tape to stick the switch to the bottom of the case, but it may be possible to screw it to the bottom of the case if you have the correct adapter. 
 
 ### Assembly Guide
 
-The assembly guide for the UTRONICS case is included in this repo or can be found using the following link. It is pretty straight forward to follow with two main caveats: the screws can be easily confused and the fan placement may be misleading in the diagrams.
+The assembly guide for the UTRONICS case is included in this repo or can be found using the following link. It is pretty straight forward to follow with two main caveats: the screws can be easily confused and the fan placement may be misleading in the diagrams. The image below provides a list of all the screws and the rubber feet provided with the case: 
+
+![UTRONICS Case Screws List](/images/ClusterCaseScrews.jpeg)
+
+The smaller black screws denoted (1) are used to assmeble the majority of the case. The slightly larger screws denoted (2) are used to mount the SSD to the removable RPI trays. The larger screws denoted (3) are used to mount the fans to the chassis and these are regular PC fan screws. The screws marked (4) are used to mount the Raspberry Pi machines to the removable machine trays. The screws marked (5) are used to mount the removable machines to the cluster case. Finally the rubber feet marked (6) are attached to the bottom of the case when it is built. 
 
 Once the case has been assembled, mount the SSD(s) and the raspberry pi(s) to each of the removable rack mounts. The switch should then be mounted in the bottom of the case. One of the main problems of the design is that the POE Hats need some clearance from the Raspberry Pi but the rack mounts do not provide this properly. It is possible to better mount this using some very long M2 screws. See this picture to see how it was mounted during the event. 
 
