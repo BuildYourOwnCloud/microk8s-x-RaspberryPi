@@ -68,7 +68,7 @@ Two fans are included with the UTRONICS case but they are pretty basic. One opti
 
 For those who want multi-architecture support in their cluster, the Rock Pi X is a great addition to the cluster and it includes the required pins in order to utilise the POE hat. The Rock Pi X includes an Intel CPU, a Cherry Trail Quad Core Z8350 64Bit CPU and therefore, can be used to bring x86_64 support to the cluster if required. This is quite useful if you plan to use the cluster to perform software builds. A different Ubuntu image is required to boot this machine. 
 
-![RockPiX Intel x86_64 Machine](/images/1-RockPiX.jpeg)
+![RockPiX Intel x86_64 Machine](/images/RockPiX.jpeg)
 
 - Rock Pi 4C (Link)
 
