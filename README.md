@@ -17,7 +17,6 @@ The following parts were used as part of the cluster:
  - 4 x Raspberry Pi Model 4B 8GB (Link): 
 
 Using models with less memory is possible, but less ram means that potentially less containers can run on-top of the nodes. Raspberry Pi Model 3 can also be used. Remember the OS and Kubernetes itself will utilise some of the memory footprint on the system so keep this in mind during capacity planning. As of this writing the global supply of RPI4 are very limited due to supply chain issues and high demand. Therefore, we have highlighted some possible alternative single-board computers in the optional parts section. 
-
  - 4 x Raspberry Pi POE HAT v2.0 (Link): 
 
 POE is actually optional, but makes the cluster design much cleaner. If your Router/Switch does not support POE, then you will need to buy power supplies for each machine in the cluster. Its important to remember that a good power supply is required as usually a phone charger will not be enough and will give low-power errors. 
@@ -56,17 +55,21 @@ Finally you will need some tools to assemble the case: some sissors to open pack
 
 ### Optional Parts
 
- - 2 x USB to 2 PIN Fan Connector (Link): 
+ - 2 x USB to 2 PIN Fan Connector or 4 PIN Fan Connector (Link): 
 
 The UTRONICS case has two optional 80MM case fans which come with it. These fans came with 2-pin connectors and there is seemingly no where to easily connect them as the GPIO pins are attached to POE hats. One simple way to solve this problem is to use a USB to 2-Pin fan connector cable or create your own. These can be found on AliExpress, eBay and Amazon. 
 
+If you opted for the more expensive replacement Noctua fans, you will need 4 PIN Fan connectors instead. Theres can be found from this link on eBay or this link on Amazon. 
+
  - 2 x Noctua Silent 80mm Fan (Link): 
 
-Two fans are included with the UTRONICS case but they are pretty basic. One optional recommendation is to replace these with high quality Noctua silent fans or high performance fans such as the Noctua NF-A9x14. 
+Two fans are included with the UTRONICS case but they are pretty basic. One optional recommendation is to replace these with high quality Noctua silent fans or high performance fans such as the Noctua NF-A9x14. These fans are a little thicker than the ones provided with the cluster, but they do fit and do work nicely in the case. 
 
- - Rock Pi X (Link): 
+ - Rock Pi X for Intel x86_64 Multi-arch support (Link): 
 
 For those who want multi-architecture support in their cluster, the Rock Pi X is a great addition to the cluster and it includes the required pins in order to utilise the POE hat. The Rock Pi X includes an Intel CPU, a Cherry Trail Quad Core Z8350 64Bit CPU and therefore, can be used to bring x86_64 support to the cluster if required. This is quite useful if you plan to use the cluster to perform software builds. A different Ubuntu image is required to boot this machine. 
+
+The Ubuntu Installation instructions for the Rock Pi X can be found here: [https://wiki.radxa.com/RockpiX/install/ubuntu](https://wiki.radxa.com/RockpiX/install/ubuntu). 
 
 ![RockPiX Intel x86_64 Machine](/images/RockPiX.jpeg)
 
@@ -97,7 +100,92 @@ This section details the software configuration for the entire cluster, includin
 
 ### Flashing the SD cards with Ubuntu
 
-WIP 
+The first step for setting up the cluster is to download the latest official Ubuntu Server image for Raspberry Pi. The image can be found on Ubuntu website here: [https://ubuntu.com/download/raspberry-pi](https://ubuntu.com/download/raspberry-pi). The version used at the conference was the latest Ubuntu Server 22.04 release. 
+
+Once the image has been downloaded, the are multiple ways to put the image onto the SD card and this is out of the scope of this article. If you're on Ubuntu, you can use the Startup Disk Creator Tool which is included in Ubuntu or the gnome Disks tool. A tutorial for this can be found here: [https://ubuntu.com/tutorials/create-an-ubuntu-image-for-a-raspberry-pi-on-ubuntu#2-on-your-ubuntu-machine](https://ubuntu.com/tutorials/create-an-ubuntu-image-for-a-raspberry-pi-on-ubuntu#2-on-your-ubuntu-machine). If you're on a different operating system, [Etcher](https://www.balena.io/etcher/) can also be used, as well other tool SD card flashing tools. 
+
+If you're using Rock Pi X which utilise Intel x86_64 CPU(s) instead of the ARM CPU on the Raspberry Pi, you will need a different image and to follow a different set of steps which can be found here: [https://wiki.radxa.com/RockpiX/install/ubuntu](https://wiki.radxa.com/RockpiX/install/ubuntu). 
+
+Once you have flash each SD card with the Ubuntu image, pop them back into each of the RPI machines to move onto the configuration stage. 
+
+### Configuring the RPI machines 
+
+As the solution is clustered, it is very important to consider the network configuration carefully for the cluster: each machine needs to be able to resolve/talk to the other nodes, usually by their IP address in order to be able to function properly. This means you will need to use either static IP addresses or DHCP with static leases for the raspberry pi(s), otherwise the cluster configuration will need to be updated every time the IPs change which isn't great. 
+
+If you opted for a router in your cluster, you can have strict control over the allocated IP(s) by modifying the router configuration. If you're using a switch you will need to modify the configuration on the external router such as your home router. 
+
+It is recommended to utilise a screen and keyboard for the new few steps, connected directly to each machine during setup. 
+
+The next steps should be repeated for each machine in the cluster: 
+
+1. Boot and log into the machine. 
+
+This step is pretty straight forward. Depending on your setup, either plug in a RPI power adapter or connect the machine to the POE source. 
+
+2. Enable SSH and import SSH keys for your user for maintenace/admin later on. 
+
+```
+# check that the SSH service is installed and started. 
+sudo apt-get install ssh
+sudo systemctl status sshd
+
+# Import your SSH github public keys
+ssh-import-id-gh <your-github-id>
+
+# or you Launchpad public keys: 
+ssh-import-id-lp <your-launchpad->
+```
+
+Now you should be able to access your machine remotely from your laptop/workstation. 
+
+3. Set the hostname of the machine. 
+
+In our example, we will use the following naming convention: 
+
+```
+# node1.cluster1.microk8s
+# node2.cluster1.microk8s
+# node3.cluster1.microk8s
+# node4.cluster1.microk8s
+# This is configured on each machine using the following command:
+
+sudo hostnamectl set-hostname node1.cluster1.microk8s 
+```
+
+4. Set the DNS server of the machine (optional)  and the search domain. 
+5. Enable cgroups
+
+It is incredibly important to enable cgroups otherwise Microk8s will not function. By default on RPI cgroups is disabled. In order to do this, we have to modify the boot special boot config file and add an extra flag: 
+
+```
+```
+
+6. Setup the extra SSD drive for the clustered storage (optional)
+7. Install the Microk8s Snap
+
+Installing Microk8s is very easy, just run the single command: 
+
+```
+# Install the non-confined version. 
+sudo snap install microk8s --classic
+```
+
+### Setting up the Microk8s Cluster 
+
+A good test before setting up the cluster is to try pinging each machine in the cluster from each node in the cluster to make sure they can reach each other. If youre network environment is very restrictive it may be worth while checking that each port for the cluster is also open (). 
+
+With Microk8s running on each node, run the following command on the first cluster node to generate the enlistment command which should be run on each of the additional nodes (2,3,4) to cluster them together: 
+```
+# Generate enlistment command: 
+microk8s.add-node
+
+
+# Now run the command on node 2:
+
+# ...and repeat for nodes 3 and 4. 
+```
+
+By default each node in the cluster will run as a "master node" meaning that if any of them go down, the cluster services will keep running which includes dqlite or etcd depending on your microk8s configuration. However, it is possible to configure nodes to act as "worker-only" nodes for better performance at the cost of high availability. 
 
 ## Microk8s 22.04 Demo Features
 
