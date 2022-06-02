@@ -19,7 +19,11 @@ The following parts were used as part of the cluster:
 Using models with less memory is possible, but less ram means that potentially less containers can run on-top of the nodes. Raspberry Pi Model 3 can also be used. Remember the OS and Kubernetes itself will utilise some of the memory footprint on the system so keep this in mind during capacity planning. As of this writing the global supply of RPI4 are very limited due to supply chain issues and high demand. Therefore, we have highlighted some possible alternative single-board computers in the optional parts section. 
  - 4 x Raspberry Pi POE HAT v2.0 (Link): 
 
-POE is actually optional, but makes the cluster design much cleaner. If your Router/Switch does not support POE, then you will need to buy power supplies for each machine in the cluster. Its important to remember that a good power supply is required as usually a phone charger will not be enough and will give low-power errors. 
+POE is actually optional, but makes the cluster design much cleaner. If your Router/Switch does not support POE, then you will need to buy power supplies for each machine in the cluster. Its important to remember that a good power supply is required as usually a phone charger will not be enough and will give low-power errors. The following image shows the Raspberry Pi POE hats v1 and v2 as well as a cheap POE injector which can be used as an alternative option: 
+
+![Raspberry Pi POE Options](/images/RPIPoeOptions.jpeg)
+
+The POE Injector cable can be found on Amazon using this link. There are also unofficial POE hats which can be found on AliExpress, but these are untested. 
 
  - 4 x Raspberry Pi SSD Adapter (Link): 
 
@@ -32,6 +36,8 @@ The SD cards used for the Kubecon clusters varied from 128GB to 256GB depending 
  - 4 x 2.5" SSD for Microk8s and Container volumes (Link): 
 
 The SSD(s) used as part of the cluster build were 256GB, 2.5" drives. Smaller drives can be used, 32GB as a minimum but we tried to pick respected, well known brands like Kingston. It may be possible to use small 2.5" magnetic drives, but they will be noiser and may require more power draw. 
+
+![Raspberry Pi Cluster Mounted with SSDsRPIPoeOptions.jpeg](/images/RPIAndSSDReadyForMount.jpeg)
 
  - 1 x Raspberry Pi Cluster Case (Link): 
 
@@ -49,9 +55,11 @@ One way around this problem is obviously to use a router instead of switch. Ther
 
 As we have 4 machines in the cluster, each one of them requires a network connection to the switch. We do not utilise WiFi in this solution. For Kubecon 2022 we purchased a back of 5 cables in a set, all pre-made. The minimum size we could find was 0.5m but 0.25M or smaller is much better. If you're able to crimp/produce your own cables then this will save cost and provide a more optimal cable configuration. Finally, you will need a longer cable to connect your cluster back to your home router. 
 
- - Sissors, Philips Screwdrivers (assorted), SD Card Reader, Patience. 
+ - Sissors, Philips Screwdrivers (assorted), Keyboard, Monitor, SD Card Writer/Reader, Patience. 
 
 Finally you will need some tools to assemble the case: some sissors to open packaging, different types of Philips screwdrivers and some patience. Flashing the SD card for every machine and configuring each machine individually can take some time. The SD Card reader will need to be able to read/write MicroSD cards and you will need another machine to write the Ubuntu image to the SD cards. 
+
+You may need a monitor and keyboard to interact with the Raspberry Pi(s) including the required cables, such as HDMI/Micro HDMI and a USB keyboard. 
 
 ### Optional Parts
 
@@ -64,6 +72,8 @@ If you opted for the more expensive replacement Noctua fans, you will need 4 PIN
  - 2 x Noctua Silent 80mm Fan (Link): 
 
 Two fans are included with the UTRONICS case but they are pretty basic. One optional recommendation is to replace these with high quality Noctua silent fans or high performance fans such as the Noctua NF-A9x14. These fans are a little thicker than the ones provided with the cluster, but they do fit and do work nicely in the case. 
+
+![Cluster with Noctua Fans](/images/ClusterCaseWithNoctuaAndAdapter.jpeg)
 
  - Rock Pi X for Intel x86_64 Multi-arch support (Link): 
 
