@@ -1,6 +1,6 @@
-# Microk8s x Raspberry Pi 4 Cluster Build Guide 
-
 ![Microk8s x_RPI](/images/0-Microk8sXRPI-Header.png)
+
+# Introduction
 
 This document includes a full hardware and software breakdown of the Raspberry Pi Kubernetes clusters present at the Canonical booth during the Kubecon Valencia conference. The goal of this document is to provide enough information to allow anyone to assemble their own cluster to the same specification. 
 
