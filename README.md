@@ -200,3 +200,5 @@ As part of the 22.04 Microk8s release, the following two new features were demon
 Hopefully this guide has provided enough information to allow you to build your own Microk8s cluster using Raspberry Pi. For questions on this setup, please reach out to Calvin Hartwell (calvin.hartwell@canonical.com) or reach out on the Microk8s slack channel on the official Kubernetes slack (https://microk8s.io/docs/get-in-touch). Microk8s bugs can also be raised on Github here: https://github.com/ubuntu/microk8s/issues. 
 
 The next feature which could be added to the cluster is the use of MAAS with customer power drivers. This would allow the cluster to be network booted and dynamically provisioned or provisioned on-demand. Another nice addition may be some Google Coral devices for added AI/ML capability. 
+
+![1-MultipleFinishedClusters.jpg](/images/1-MultipleFinishedClusters.jpg)
